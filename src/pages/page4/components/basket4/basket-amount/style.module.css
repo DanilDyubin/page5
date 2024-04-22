@@ -1,0 +1,16 @@
+.amount {
+  padding: 20px 110px 20px 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 40px;
+  border-bottom: 1px dashed #000;
+  font-weight: 800;
+}
+
+.basket {
+  margin-right: 20px;
+}
+
+.basket span {
+  font-weight: 800;
+}

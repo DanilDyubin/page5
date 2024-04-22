@@ -1,0 +1,19 @@
+.product-item {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.category span {
+  font-weight: 800;
+}
+
+.price {
+  fonte-size: 24px;
+  font-weight: 800;
+}
+
+.btn {
+  width: 80px;
+}

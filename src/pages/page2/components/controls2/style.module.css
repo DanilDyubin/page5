@@ -1,0 +1,14 @@
+.controls {
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 1px dashed #000;
+}
+
+.basket {
+  margin-right: 20px;
+}
+
+.basket span {
+  font-weight: 800;
+}

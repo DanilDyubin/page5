@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Menu from '../pages/menu';
+import Basket from '../pages/page4/components/basket4/Basket';
 import Page1 from '../pages/page1/Page1';
 import Page2 from '../pages/page2/Page2';
 import Page3 from '../pages/page3/Page3';
@@ -20,6 +21,7 @@ function App() {
         <Route path="/page4" element={<Page4 />} />
         <Route path="/page4/:productId" element={<SingleProductPage4 />} />
       </Routes>
+      <Basket />
     </>
   );
 }

@@ -8,10 +8,12 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 //   setLoading(false);
 // };
 
-export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
-  // const { id } = params;
-  // const phoneId = id ? `&id=${id}` : '';
-  const response = await fetch(`https://652e6d590b8d8ddac0b15c7e.mockapi.io/phones?`);
+export const fetchProducts = createAsyncThunk('products/fetchProducts', async (params) => {
+  const { search, sort } = params;
+
+  const response = await fetch(
+    `https://652e6d590b8d8ddac0b15c7e.mockapi.io/phones?&sortBy=${sort.sortProperty}${search}`,
+  );
   const result = await response.json();
   // console.log(result);
   return result;
@@ -42,6 +44,7 @@ const productsSlice = createSlice({
       .addCase(fetchProducts.rejected, (state) => {
         state.status = 'error';
         state.items = [];
+        console.log('error');
       });
   },
 });

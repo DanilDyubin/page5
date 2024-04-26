@@ -1,33 +1,28 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { onAdd, onDelete, onModalOpen } from './store/slices/basketSlice';
+import { onSearch, resetParams } from './store/slices/filterSlice';
 import { fetchProducts } from './store/slices/productsSlice';
 import Header4 from './components/header4';
 import Controls4 from './components/controls4';
 import List4 from './components/list4';
-import Basket from './components/basket4/Basket';
-import Modal from './components/modal4';
 import Item4 from './components/item4';
 import BasketItem from './components/basket4/basket-item';
 import Pagination from './components/pagination';
 import Select from './components/select';
-import { getOneProduct4 } from '../../utils';
+import Search from './components/search';
+import Sort from './components/sort';
+import SideLayout from './components/side-layout';
 
 function Page4() {
   // const [active, setActive] = useState(false);
 
   const products = useSelector((state) => state.products.items);
-  const open = useSelector((state) => state.basket.open); // modal
+  const status = useSelector((state) => state.products.status);
+  const searchValue = useSelector((state) => state.filter.search);
+  const sort = useSelector((state) => state.filter.sort);
 
   const dispatch = useDispatch();
-
-  // sort
-  const sort = [
-    { value: 'order', title: 'По порядку' },
-    { value: 'title', title: 'По наименования' },
-    { value: 'price', title: 'По цене' },
-    { value: 'brand', title: 'По фирме' },
-  ];
 
   // pagination states
   // const [products, setProducts] = useState([]);
@@ -59,25 +54,38 @@ function Page4() {
     ),
   };
 
-  const toSlice = async () => {
-    dispatch(fetchProducts());
+  const getProducts = async () => {
+    const search = searchValue ? `&search=${searchValue}` : '';
+    dispatch(fetchProducts({ search, sort }));
   };
 
   useEffect(() => {
-    toSlice();
-    // getOneProduct4(18).then((res) => console.log(res));
-  }, []);
+    getProducts();
+  }, [searchValue, sort]);
+
+  // const list = () => {
+  //   return (
+  //     <List4 products={products} currentProducts={currentProducts} renderItem={renders.item} />
+  //   );
+  // };
 
   return (
     <>
       <Header4 title={'Магазин 4'} />
       <Controls4 setActive={onModalOpen} />
-      <Select options={sort} />
-      <List4 products={products} currentProducts={currentProducts} renderItem={renders.item} />
+      <SideLayout>
+        <Search placeholder={'Поиск'} value={searchValue} onChange={onSearch} type={'text'} />
+        <Sort />
+        <button onClick={() => dispatch(resetParams())}>Сброс</button>
+      </SideLayout>
+      {status === 'error' ? (
+        <div>Ничего не найдено!</div>
+      ) : status === 'loading' ? (
+        <div style={{ fontSize: '26px', textAlign: 'center', marginTop: '50px' }}>Loading...</div>
+      ) : (
+        <List4 products={products} currentProducts={currentProducts} renderItem={renders.item} />
+      )}
       <Pagination pag={howManyPages} setCurrentPage={setCurrentPage} />
-      <Modal active={open} setActive={onModalOpen}>
-        <Basket setActive={onModalOpen} renderItemBasket={renders.itemBasket} />
-      </Modal>
     </>
   );
 }

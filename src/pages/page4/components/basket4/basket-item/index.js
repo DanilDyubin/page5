@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 import { numberFormat } from '../../../../../utils';
 import s from './style.module.css';
 
-const BasketItem = ({ item, onDelete }) => {
+const BasketItem = ({ item, onDelete, onClose }) => {
   const dispatch = useDispatch();
 
   return (
     <li className={s.item}>
       <div className={s.wrapper}>
-        <Link to={`/page4/${item.id}`} className={s.title}>
+        <Link to={`/page4/${item.id}`} onClick={onClose} className={s.title}>
           {item.title}
         </Link>
       </div>

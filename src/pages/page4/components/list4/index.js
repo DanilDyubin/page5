@@ -1,4 +1,3 @@
-import Item from '../item4';
 import s from './style.module.css';
 
 const List4 = ({ renderItem, currentProducts }) => {
